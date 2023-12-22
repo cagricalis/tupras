@@ -17,6 +17,7 @@ const Numpad = () => {
     const [url, setUrl] = useState("https://ismer.onbox.space/api/cu1");
     const [currentNumber, setCurrentNumber] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
+    const [showPopup2, setShowPopup2] = useState(false);
 
 
     const [data, setData] = useState(null);
@@ -88,8 +89,13 @@ const Numpad = () => {
 
     const callbackPopup = () =>  {
         setShowPopup(false);
+        
     };
 
+    const callbackPopup2 = () =>  {
+       
+        setShowPopup2(false);
+    };
 
 
     const handlePostRequest1 = async () => {
@@ -135,6 +141,8 @@ const Numpad = () => {
         } catch (error) {
           console.error("Error:", error);
         }
+    } else {
+        setShowPopup2(true);
     }
       };
 
@@ -176,6 +184,7 @@ const Numpad = () => {
       </div>
 
         {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Geçerlidir"} />}
+        {showPopup2 && <CustomPopup onClose={callbackPopup2} message={"Şifreniz Geçersiz"} />}
 
       <button style={{ background: 'linear-gradient(90deg, #004050, #004050)', border: "none", width:"100%"  }} onClick={handlePostRequest1}>
         Apply
