@@ -135,7 +135,7 @@ const Numpad = () => {
         } catch (error) {
           console.error("Error:", error);
         }
-    };
+    }
       };
 
     

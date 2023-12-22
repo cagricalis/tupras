@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from './firebase.js';
-import { getDatabase, ref, child, push, update, set } from "firebase/database";
+import { getDatabase, ref, child, push, update, set,onValue } from "firebase/database";
 import { getAuth, signOut } from 'firebase/auth';
 import { Navigate, useNavigate } from 'react-router-dom';
 import logo from "./onlock_logo.png"; // Replace with your logo file
 import CustomPopup from './CustomPopup';
 
+
 const RandomPasswordGenerator = () => {
     const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [data, setData] = useState(null);
 
   const generateRandomPassword = () => {
     const randomPassword = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
@@ -33,6 +35,35 @@ const RandomPasswordGenerator = () => {
       console.error('Error logging out:', error.message);
     }
 }    
+
+
+useEffect(() => {
+    // Function to fetch data from Firebase
+    const fetchData = async () => {
+      const db = getDatabase();
+      const dataRef = ref(db, 'passwords/');
+     // const dataRef2 = ref(db, 'utils/'); // Replace 'your_data_path' with the actual path in your database
+
+      // Set up a listener for real-time updates
+      onValue(dataRef, (snapshot) => {
+        const fetchedData = snapshot.val();
+        setData(fetchedData[1]);
+     
+      });
+
+    };
+
+    // Call the fetchData function
+    fetchData();
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      // Detach the listener
+      // This is important to avoid memory leaks
+      // It ensures that the listener is removed when the component is unmounted
+    };
+  }, []); // Empty dependency array means the effect runs once when the component mounts
+
 
 
   const emptyFunction = () => {
@@ -83,6 +114,7 @@ const RandomPasswordGenerator = () => {
       >
         Apply Password
       </button>
+      <h3>Current Password: {data}</h3>
       <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
     </div>
 
