@@ -33,16 +33,9 @@ const Numpad = () => {
         onValue(dataRef, (snapshot) => {
           const fetchedData = snapshot.val();
           setData(fetchedData[1]);
-          console.log(fetchedData[1]);
+       
         });
-        // onValue(dataRef2, (snapshot2) => {
-        //     const fetchedData2 = snapshot2.val();
-        //     setData(fetchedData2[1]);
-        //     console.log(fetchedData2["ip"]);
-        //     console.log(fetchedData2["port"]);
-        //     setIP1(fetchedData2["ip"]);
-        //     setPort1(fetchedData2["port"]);
-        //   });
+
       };
   
       // Call the fetchData function
@@ -66,9 +59,7 @@ const Numpad = () => {
     
           onValue(dataRef2, (snapshot2) => {
               const fetchedData2 = snapshot2.val();
-              console.log(fetchedData2["ip"]);
-              console.log(fetchedData2["port"]);
-              console.log(fetchedData2["url"]);
+
               setIP1(fetchedData2["ip"]);
               setPort1(fetchedData2["port"]);
               setUrl(fetchedData2["url"]);
@@ -102,8 +93,7 @@ const Numpad = () => {
 
 
     const handlePostRequest1 = async () => {
-        console.log(currentNumber);
-        console.log("cc " + data);
+
 
         if(currentNumber == data) {
           

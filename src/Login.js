@@ -26,7 +26,7 @@ const callbackPopup = () =>  {
 if (isLoggedIn) {
     return <Navigate to="/generator" />;
 } else {
-    console.log("ashjdoajs");
+
 }
 
 
@@ -38,7 +38,7 @@ if (isLoggedIn) {
       await signInWithEmailAndPassword(auth, email, password);
       setIsLoggedIn(true);
     
-      console.log("asd");
+   
     } catch (error) {
      setShowPopup(true);
       console.error('Error logging in:', error.message);

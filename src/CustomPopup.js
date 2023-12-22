@@ -9,7 +9,7 @@ const CustomPopup = ({ data, onClose, message }) => {
   const[close, setClose] = useState(); 
 
   function closeModalHandler(){
-    console.log("asdas");
+
     setClose(true);
   };
 

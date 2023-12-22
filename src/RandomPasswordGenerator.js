@@ -26,7 +26,7 @@ const RandomPasswordGenerator = () => {
     try {
        
       await signOut(auth);
-      console.log("logout");
+  
       navigate('/login')
       // return <Navigate to="/Login" />;
     } catch (error) {
