@@ -5,6 +5,8 @@ import { db } from './firebase.js';
 import { getDatabase, ref, child, push, update, set, onValue } from "firebase/database";
 import { Navigate, useLocation } from 'react-router-dom';
 import Login from "./Login.js";
+import CustomPopup from './CustomPopup';
+import logo from "./onlock_logo.png"; // Replace with your logo file
 
 const Numpad = () => {
    
@@ -13,6 +15,7 @@ const Numpad = () => {
     const [IP1, setIP1] = useState("85.104.109.102");
     const [port1, setPort1] = useState("5001");
     const [currentNumber, setCurrentNumber] = useState(0);
+    const [showPopup, setShowPopup] = useState(false);
 
 
     const [data, setData] = useState(null);
@@ -53,6 +56,10 @@ const Numpad = () => {
     
  
 
+    const callbackPopup = () =>  {
+        setShowPopup(false);
+    };
+
 
 
     const handlePostRequest1 = async () => {
@@ -87,6 +94,8 @@ const Numpad = () => {
             setResponse1(data);
             if (data.isSuccess) {
                
+                setShowPopup(true);
+                setCurrentNumber(0);
      
               } 
     
@@ -118,24 +127,57 @@ const Numpad = () => {
   };
 
   return (
-    <div className="numpad-container">
-         <div className="result">{currentNumber}</div>
+    <div style={styles.formContainer} >
+       <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <div className="result" style={{border: '1px solid black', borderRadius: '5px', width: '300px' }}>{currentNumber}</div>
+      </div>
+         
       <div className="numpad">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, ,0].map((number) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, "C", 0].map((number) =>{  
+            return number != "C" ?
           <button key={number} onClick={() => appendNumber(number)}>
             {number}
-          </button>
-        ))}
-        <button onClick={deleteDigit}>Delete</button>
+          </button> : <button disabled style={{ background:"white", border: "none"   }}></button>
+        })}
+        <button style={{ background:"#ee5f55", border: "none"   }} onClick={deleteDigit}>Delete</button>
       </div>
 
+        {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Geçerlidir"} />}
 
-
-      <button className="apply-btn" onClick={handlePostRequest1}>
+      <button style={{ background: 'linear-gradient(90deg, #004050, #004050)', border: "none", width:"100%"  }} onClick={handlePostRequest1}>
         Apply
       </button>
     </div>
   );
 };
+
+const styles = {
+    applyBtn: {
+        backgroundColor: '#123123',
+        marginTop: '30px',
+        width: '100%',
+        height: '50px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+       
+        
+        // display: 'fixed',
+        // top: '10px',
+        // right: '10px'
+    },
+
+formContainer: {
+    marginBottom: '20px',
+    width: '400px',
+    padding: '30px',
+    borderRadius: '20px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'white',
+  },
+}
 
 export default Numpad;

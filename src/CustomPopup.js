@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
-const CustomPopup = ({ data, onClose }) => {
+
+
+
+const CustomPopup = ({ data, onClose, message }) => {
+  
+  const[close, setClose] = useState(); 
+
+  function closeModalHandler(){
+    console.log("asdas");
+    setClose(true);
+  };
+
+
   return (
+    
+
     <div className="custom-popup">
       <div className="popup-content">
-        <h2>Data</h2>
+        <h1>{message}</h1>
         <p>{data}</p>
-        <button onClick={onClose}>Close</button>
+        <button onClick = {onClose}>Close</button>
       </div>
     </div>
   );
