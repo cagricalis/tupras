@@ -10,16 +10,26 @@ import CustomPopup from './CustomPopup';
 const RandomPasswordGenerator = () => {
     const navigate = useNavigate();
   const [password, setPassword] = useState('');
+  const [passwordMulti, setPasswordMulti] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [showPopupMulti, setShowPopupMulti] = useState(false);
   const [data, setData] = useState(null);
+  const [dataMulti, setDataMulti] = useState(null);
 
   const generateRandomPassword = () => {
     const randomPassword = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
     setPassword(randomPassword);
   };
+  const generateRandomPasswordMulti = () => {
+    const randomPassword = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+    setPasswordMulti(randomPassword);
+  };
 
   const callbackPopup = () =>  {
     setShowPopup(false);
+};
+const callbackPopupMulti = () =>  {
+    setShowPopupMulti(false);
 };
 
   const handleLogout = async () => {
@@ -42,12 +52,20 @@ useEffect(() => {
     const fetchData = async () => {
       const db = getDatabase();
       const dataRef = ref(db, 'passwords/');
+      const dataRefMulti = ref(db, 'passwordsMulti/');
      // const dataRef2 = ref(db, 'utils/'); // Replace 'your_data_path' with the actual path in your database
 
       // Set up a listener for real-time updates
       onValue(dataRef, (snapshot) => {
         const fetchedData = snapshot.val();
         setData(fetchedData[1]);
+        
+     
+      });
+      onValue(dataRefMulti, (snapshot) => {
+        const fetchedData = snapshot.val();
+        
+        setDataMulti(fetchedData[1]);
      
       });
 
@@ -68,12 +86,26 @@ useEffect(() => {
 
   const emptyFunction = () => {
     set(ref(db, 'passwords/'), {
-        1: password,
+        1:password,
 
       })
       .then(() => {
         // Data saved successfully!
         setShowPopup(true);
+      })
+      .catch((error) => {
+        // The write failed...
+      });
+  };
+
+  const emptyFunctionMulti = () => {
+    set(ref(db, 'passwordsMulti/'), {
+         1:passwordMulti,
+
+      })
+      .then(() => {
+        // Data saved successfully!
+        setShowPopupMulti(true);
       })
       .catch((error) => {
         // The write failed...
@@ -88,7 +120,7 @@ useEffect(() => {
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>Create Password</h2>
+      <h2>Create Password For Single Lock</h2>
       <label htmlFor="password"></label>
       <input
         type="text"
@@ -118,8 +150,52 @@ useEffect(() => {
       <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
     </div>
 
+
+
+    <div style={styles.formContainer} >
+    <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <h2>Create Password For Multi Lock</h2>
+      <label htmlFor="passwordMulti"></label>
+      <input
+        type="text"
+        id="passwordMulti"
+        placeholder='Password'
+        value={passwordMulti}
+        readOnly
+        style={{ margin: '10px', padding: '10px', fontSize: '16px' }}
+      />
+
+      <br />
+
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px'  }}
+        onClick={generateRandomPasswordMulti}
+      >
+        Generate Password
+      </button>
+      {showPopupMulti && <CustomPopup onClose={callbackPopupMulti} message={"Şifreniz Değiştirilmiştir"} />}
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px' }}
+        onClick={emptyFunctionMulti}
+      >
+        Apply Password
+      </button>
+      <h3>Current Password: {dataMulti}</h3>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+    </div>
+
+
         
     </div>
+
+
+
+
+
+
+
     
   );
 };

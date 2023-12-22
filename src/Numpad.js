@@ -15,12 +15,16 @@ const Numpad = () => {
     const [IP1, setIP1] = useState("85.104.109.102");
     const [port1, setPort1] = useState("5001");
     const [url, setUrl] = useState("https://ismer.onbox.space/api/cu1");
+    const [IP2, setIP2] = useState("85.104.109.102");
+    const [port2, setPort2] = useState("5002");
+    const [url2, setUrl2] = useState("https://ismer.onbox.space/api/cu48");
     const [currentNumber, setCurrentNumber] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
     const [showPopup2, setShowPopup2] = useState(false);
 
 
     const [data, setData] = useState(null);
+    const [dataMulti, setDataMulti] = useState(null);
     const [isEqual, setIsEqual] = useState(false);
 
     useEffect(() => {
@@ -49,6 +53,33 @@ const Numpad = () => {
         // It ensures that the listener is removed when the component is unmounted
       };
     }, []); // Empty dependency array means the effect runs once when the component mounts
+
+    useEffect(() => {
+        // Function to fetch data from Firebase
+        const fetchData = async () => {
+          const db = getDatabase();
+          const dataRef = ref(db, 'passwordsMulti/');
+         // const dataRef2 = ref(db, 'utils/'); // Replace 'your_data_path' with the actual path in your database
+    
+          // Set up a listener for real-time updates
+          onValue(dataRef, (snapshot) => {
+            const fetchedData = snapshot.val();
+            setDataMulti(fetchedData[1]);
+         
+          });
+  
+        };
+    
+        // Call the fetchData function
+        fetchData();
+    
+        // Clean up the listener when the component unmounts
+        return () => {
+          // Detach the listener
+          // This is important to avoid memory leaks
+          // It ensures that the listener is removed when the component is unmounted
+        };
+      }, []); // Empty dependency array means the effect runs once when the component mounts
   
 
 
@@ -60,10 +91,37 @@ const Numpad = () => {
     
           onValue(dataRef2, (snapshot2) => {
               const fetchedData2 = snapshot2.val();
-
               setIP1(fetchedData2["ip"]);
               setPort1(fetchedData2["port"]);
               setUrl(fetchedData2["url"]);
+            });
+        };
+    
+        // Call the fetchData function
+        fetchData();
+    
+        // Clean up the listener when the component unmounts
+        return () => {
+          // Detach the listener
+          // This is important to avoid memory leaks
+          // It ensures that the listener is removed when the component is unmounted
+        };
+      }, []); // Empty dependency array means the effect runs once when the component mounts
+    
+
+
+      useEffect(() => {
+        // Function to fetch data from Firebase
+        const fetchData = async () => {
+          const db = getDatabase();
+          const dataRef2 = ref(db, 'utilsMulti/'); 
+    
+          onValue(dataRef2, (snapshot2) => {
+              const fetchedData2 = snapshot2.val();
+ 
+              setIP2(fetchedData2["ip"]);
+              setPort2(fetchedData2["port"]);
+              setUrl2(fetchedData2["url"]);
             });
         };
     
@@ -141,10 +199,49 @@ const Numpad = () => {
         } catch (error) {
           console.error("Error:", error);
         }
+    } else if (currentNumber == dataMulti) {
+      try {
+          const response = await fetch(
+            url2,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization":
+                  "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
+              },
+              body: JSON.stringify({
+                lockNo: 1,
+                IP: IP2,
+                port: port2,
+                timeStamp: "2022-02-15T12:00:02.202Z",
+              }),
+            }
+          );
+    
+          if (response.ok) {
+            const data = await response.json();
+            setResponse1(data);
+            if (data.isSuccess) {
+               
+                setShowPopup(true);
+                setCurrentNumber(0);
+     
+              } 
+    
+          } else {
+            
+            console.error("Error:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+    
     } else {
         setShowPopup2(true);
     }
       };
+
 
     
   
