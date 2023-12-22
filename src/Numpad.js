@@ -14,6 +14,7 @@ const Numpad = () => {
     const [lockType1, setLockType1] = useState("multi");
     const [IP1, setIP1] = useState("85.104.109.102");
     const [port1, setPort1] = useState("5001");
+    const [url, setUrl] = useState("https://ismer.onbox.space/api/cu1");
     const [currentNumber, setCurrentNumber] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
 
@@ -25,7 +26,8 @@ const Numpad = () => {
       // Function to fetch data from Firebase
       const fetchData = async () => {
         const db = getDatabase();
-        const dataRef = ref(db, 'passwords/'); // Replace 'your_data_path' with the actual path in your database
+        const dataRef = ref(db, 'passwords/');
+       // const dataRef2 = ref(db, 'utils/'); // Replace 'your_data_path' with the actual path in your database
   
         // Set up a listener for real-time updates
         onValue(dataRef, (snapshot) => {
@@ -33,6 +35,14 @@ const Numpad = () => {
           setData(fetchedData[1]);
           console.log(fetchedData[1]);
         });
+        // onValue(dataRef2, (snapshot2) => {
+        //     const fetchedData2 = snapshot2.val();
+        //     setData(fetchedData2[1]);
+        //     console.log(fetchedData2["ip"]);
+        //     console.log(fetchedData2["port"]);
+        //     setIP1(fetchedData2["ip"]);
+        //     setPort1(fetchedData2["port"]);
+        //   });
       };
   
       // Call the fetchData function
@@ -47,6 +57,35 @@ const Numpad = () => {
     }, []); // Empty dependency array means the effect runs once when the component mounts
   
 
+
+    useEffect(() => {
+        // Function to fetch data from Firebase
+        const fetchData = async () => {
+          const db = getDatabase();
+          const dataRef2 = ref(db, 'utils/'); 
+    
+          onValue(dataRef2, (snapshot2) => {
+              const fetchedData2 = snapshot2.val();
+              console.log(fetchedData2["ip"]);
+              console.log(fetchedData2["port"]);
+              console.log(fetchedData2["url"]);
+              setIP1(fetchedData2["ip"]);
+              setPort1(fetchedData2["port"]);
+              setUrl(fetchedData2["url"]);
+            });
+        };
+    
+        // Call the fetchData function
+        fetchData();
+    
+        // Clean up the listener when the component unmounts
+        return () => {
+          // Detach the listener
+          // This is important to avoid memory leaks
+          // It ensures that the listener is removed when the component is unmounted
+        };
+      }, []); // Empty dependency array means the effect runs once when the component mounts
+    
 
 
 
@@ -64,7 +103,7 @@ const Numpad = () => {
 
     const handlePostRequest1 = async () => {
         console.log(currentNumber);
-        console.log(data);
+        console.log("cc " + data);
 
         if(currentNumber == data) {
           
@@ -72,18 +111,18 @@ const Numpad = () => {
 
         try {
           const response = await fetch(
-            "https://ismer.onbox.space/api/cu48",
+            url,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 "Authorization":
-                  "81551fa4-zwzn-6931-kdtk-6f209d635f5d", // Replace with your token
+                  "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
               },
               body: JSON.stringify({
                 lockNo: 1,
-                IP: "85.104.109.102",
-                port: "5001",
+                IP: IP1,
+                port: port1,
                 timeStamp: "2022-02-15T12:00:02.202Z",
               }),
             }
@@ -100,6 +139,7 @@ const Numpad = () => {
               } 
     
           } else {
+            
             console.error("Error:", response.statusText);
           }
         } catch (error) {
@@ -140,7 +180,7 @@ const Numpad = () => {
             return number != "C" ?
           <button key={number} onClick={() => appendNumber(number)}>
             {number}
-          </button> : <button disabled style={{ background:"white", border: "none"   }}></button>
+          </button> : <button disabled style={{ background:"white", border: "none" }}></button>
         })}
         <button style={{ background:"#ee5f55", border: "none"   }} onClick={deleteDigit}>Delete</button>
       </div>
