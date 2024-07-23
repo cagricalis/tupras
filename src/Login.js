@@ -13,6 +13,7 @@ const Login = ({ onLogin }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isEqual, setIsEqual] = useState(false);
+  const [selectedPage, setSelectedPage] = useState('generator'); 
  //const history = useHistory();
 
  useEffect(() => {
@@ -24,7 +25,10 @@ const callbackPopup = () =>  {
 };
 
 if (isLoggedIn) {
-    return <Navigate to="/generator" />;
+   // return <Navigate to="/generator" />;
+   if (isLoggedIn && selectedPage) {
+    return <Navigate to={`/${selectedPage}`} />;
+  }
 } else {
 
 }
@@ -47,10 +51,31 @@ if (isLoggedIn) {
 
   return (
     <div style={styles.container}>
+    
     <div style={styles.formContainer}>
+
     <div className="logo-container">
         <img src={logo} alt="Logo" className="logo" />
       </div>
+
+      {/* <div style={styles.pageButtons}>
+          <button onClick={() => setSelectedPage('generator')} style={styles.pageButton}>Odalar</button>
+          <button onClick={() => setSelectedPage('dolap')} style={styles.pageButton}>Dolap</button>
+        </div> */}
+        <div style={styles.pageSelection}>
+          <label htmlFor="page" style={styles.label}>
+            Giriş Tipini Seçiniz:
+          </label>
+          <select
+            id="page"
+            value={selectedPage}
+            onChange={(e) => setSelectedPage(e.target.value)}
+            style={styles.select}
+          >
+            <option value="generator">Odalar</option>
+            <option value="dashboard">Dolap</option>
+          </select>
+        </div>
       <form onSubmit={handleLogin}>
         <label htmlFor="email" style={styles.label}>
           Email:
@@ -65,7 +90,7 @@ if (isLoggedIn) {
         />
 
         <label htmlFor="password" style={styles.label}>
-          Password:
+          Şifre:
         </label>
         <input
           type="password"
@@ -77,9 +102,10 @@ if (isLoggedIn) {
         />
         {showPopup && <CustomPopup onClose={callbackPopup} message={"Email adresi veya şifreniz hatalı"} />}
         <button type="submit" style={styles.button}>
-          Login
+          Giriş
         </button>
       </form>
+
     </div>
   </div>
 
@@ -133,6 +159,18 @@ const styles = {
     signupLink: {
       marginTop: '16px',
       fontSize: '14px',
+    },
+    pageSelection: {
+      marginTop: '16px',
+    },
+    select: {
+      width: '100%',
+      height: '40px',
+      fontSize: '16px',
+      borderRadius: '4px',
+      border: '1px solid #ccc',
+      backgroundColor: '#fff',
+      padding: '5px',
     },
   };
 

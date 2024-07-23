@@ -1,0 +1,47 @@
+.numpad-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+  }
+  
+  button {
+    padding: 15px;
+    font-size: 18px;
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid #45a049;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .result {
+    margin-top: 20px;
+    font-size: 24px;
+  }
+  
+  .apply-btn {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #008CBA;
+    color: white;
+    border: 1px solid #0077a3;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-btn:hover {
+    background-color: #0077a3;
+  }
+  

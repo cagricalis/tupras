@@ -10,15 +10,33 @@ import CustomPopup from './CustomPopup';
 const RandomPasswordGenerator = () => {
     const navigate = useNavigate();
   const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+  const [password3, setPassword3] = useState('');
+  const [password4, setPassword4] = useState('');
   const [passwordMulti, setPasswordMulti] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupMulti, setShowPopupMulti] = useState(false);
   const [data, setData] = useState(null);
+  const [data2, setData2] = useState(null);
+  const [data3, setData3] = useState(null);
+  const [data4, setData4] = useState(null);
   const [dataMulti, setDataMulti] = useState(null);
 
   const generateRandomPassword = () => {
-    const randomPassword = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+    const randomPassword = Math.floor(Math.random() * 1000000).toString().padStart(6, '1');
     setPassword(randomPassword);
+  };
+  const generateRandomPassword2 = () => {
+    const randomPassword2 = Math.floor(Math.random() * 1000000).toString().padStart(6, '1');
+    setPassword2(randomPassword2);
+  };
+  const generateRandomPassword3 = () => {
+    const randomPassword3 = Math.floor(Math.random() * 1000000).toString().padStart(6, '1');
+    setPassword3(randomPassword3);
+  };
+  const generateRandomPassword4 = () => {
+    const randomPassword4 = Math.floor(Math.random() * 1000000).toString().padStart(6, '1');
+    setPassword4(randomPassword4);
   };
   const generateRandomPasswordMulti = () => {
     const randomPassword = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
@@ -51,7 +69,7 @@ useEffect(() => {
     // Function to fetch data from Firebase
     const fetchData = async () => {
       const db = getDatabase();
-      const dataRef = ref(db, 'passwords/');
+      const dataRef = ref(db, 'passwordsHotel/');
       const dataRefMulti = ref(db, 'passwordsMulti/');
      // const dataRef2 = ref(db, 'utils/'); // Replace 'your_data_path' with the actual path in your database
 
@@ -59,6 +77,9 @@ useEffect(() => {
       onValue(dataRef, (snapshot) => {
         const fetchedData = snapshot.val();
         setData(fetchedData[1]);
+        setData2(fetchedData[2]);
+        setData3(fetchedData[3]);
+        setData4(fetchedData[4]);
         
      
       });
@@ -85,8 +106,59 @@ useEffect(() => {
 
 
   const emptyFunction = () => {
-    set(ref(db, 'passwords/'), {
+    set(ref(db, 'passwordsHotel/'), {
         1:password,
+        2:data2,
+        3:data3,
+        4:data4
+
+      })
+      .then(() => {
+        // Data saved successfully!
+        setShowPopup(true);
+      })
+      .catch((error) => {
+        // The write failed...
+      });
+  };
+  const emptyFunction2 = () => {
+    set(ref(db, 'passwordsHotel/'), {
+      1:data,
+      2:password2,
+      3:data3,
+      4:data4
+
+      })
+      .then(() => {
+        // Data saved successfully!
+        setShowPopup(true);
+      })
+      .catch((error) => {
+        // The write failed...
+      });
+  };
+  const emptyFunction3 = () => {
+    set(ref(db, 'passwordsHotel/'), {
+      1:data,
+      2:data2,
+      3:password3,
+      4:data4
+
+      })
+      .then(() => {
+        // Data saved successfully!
+        setShowPopup(true);
+      })
+      .catch((error) => {
+        // The write failed...
+      });
+  };
+  const emptyFunction4 = () => {
+    set(ref(db, 'passwordsHotel/'), {
+      1:data,
+      2:data2,
+      3:data3,
+      4:password4
 
       })
       .then(() => {
@@ -115,17 +187,20 @@ useEffect(() => {
   return (
 
     
-    <div>
+    
+    <div style={styles.container}>
+   
+    
     <div style={styles.formContainer} >
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>Create Password For Single Lock</h2>
+      <h2>VIP ODA 1</h2>
       <label htmlFor="password"></label>
       <input
         type="text"
         id="password"
-        placeholder='Password'
+        placeholder='Şifre'
         value={password}
         readOnly
         style={{ margin: '10px', padding: '10px', fontSize: '16px' }}
@@ -137,22 +212,130 @@ useEffect(() => {
         style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px'  }}
         onClick={generateRandomPassword}
       >
-        Generate Password
+        Şifre Oluştur
       </button>
       {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Değiştirilmiştir"} />}
       <button
         style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px' }}
         onClick={emptyFunction}
       >
-        Apply Password
+        Şifreyi Kaydet
       </button>
-      <h3>Current Password: {data}</h3>
+      <h3>Mevcut Şifre: {data}</h3>
       <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+    </div>
+    <div style={styles.formContainer} >
+    <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <h2>VIP ODA 2</h2>
+      <label htmlFor="password2"></label>
+      <input
+        type="text"
+        id="password2"
+        placeholder='Şifre'
+        value={password2}
+        readOnly
+        style={{ margin: '10px', padding: '10px', fontSize: '16px' }}
+      />
+
+      <br />
+
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px'  }}
+        onClick={generateRandomPassword2}
+      >
+        Şifre Oluştur
+      </button>
+      {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Değiştirilmiştir"} />}
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px' }}
+        onClick={emptyFunction2}
+      >
+        Şifreyi Kaydet
+      </button>
+      <h3>Mevcut Şifre: {data2}</h3>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+    </div>
+   
+  
+    <div style={styles.formContainer} >
+    <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <h2>VIP ODA 3</h2>
+      <label htmlFor="password3"></label>
+      <input
+        type="text"
+        id="password3"
+        placeholder='Şifre'
+        value={password3}
+        readOnly
+        style={{ margin: '10px', padding: '10px', fontSize: '16px' }}
+      />
+
+      <br />
+
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px'  }}
+        onClick={generateRandomPassword3}
+      >
+        Şifre Oluştur
+      </button>
+      {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Değiştirilmiştir"} />}
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px' }}
+        onClick={emptyFunction3}
+      >
+        Şifreyi Kaydet
+      </button>
+      <h3>Mevcut Şifre: {data3}</h3>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+    </div>
+    <div style={styles.formContainer} >
+    <div style={styles.logoContainer}>
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <h2>VIP ODA 4</h2>
+      <label htmlFor="password4"></label>
+      <input
+        type="text"
+        id="password4"
+        placeholder='Şifre'
+        value={password4}
+        readOnly
+        style={{ margin: '10px', padding: '10px', fontSize: '16px' }}
+      />
+
+      <br />
+
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px'  }}
+        onClick={generateRandomPassword4}
+      >
+        Şifre Oluştur
+      </button>
+      {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Değiştirilmiştir"} />}
+      <button
+        style={{ margin: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer',width: '100px' }}
+        onClick={emptyFunction4}
+      >
+        Şifreyi Kaydet
+      </button>
+      <h3>Mevcut Şifre: {data4}</h3>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+    </div>
+    
+
+
+
     </div>
 
 
+ 
+ 
 
-    <div style={styles.formContainer} >
+    /* <div style={styles.formContainer} >
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
@@ -184,16 +367,7 @@ useEffect(() => {
       </button>
       <h3>Current Password: {dataMulti}</h3>
       <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
-    </div>
-
-
-        
-    </div>
-
-
-
-
-
+    </div> */
 
 
     
@@ -201,6 +375,9 @@ useEffect(() => {
 };
 
 const styles = {
+
+
+
     logoContainer: {
         display: 'flex',
         justifyContent: 'center',
@@ -221,12 +398,19 @@ applyBtn: {
 },
 formContainer: {
     marginBottom: '20px',
-    width: '400px',
+    width: '500px',
     padding: '30px',
     borderRadius: '20px',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
     backgroundColor: 'white',
   },
+  container: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '20px',
+    margin: 'auto',
+},
+
 }
 
 export default RandomPasswordGenerator;

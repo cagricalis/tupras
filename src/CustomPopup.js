@@ -21,7 +21,7 @@ const CustomPopup = ({ data, onClose, message }) => {
       <div className="popup-content">
         <h1>{message}</h1>
         <p>{data}</p>
-        <button onClick = {onClose}>Close</button>
+        <button onClick = {onClose}>Kapat</button>
       </div>
     </div>
   );

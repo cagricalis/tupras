@@ -24,6 +24,9 @@ const Numpad = () => {
 
 
     const [data, setData] = useState(null);
+    const [data2, setData2] = useState(null);
+    const [data3, setData3] = useState(null);
+    const [data4, setData4] = useState(null);
     const [dataMulti, setDataMulti] = useState(null);
     const [isEqual, setIsEqual] = useState(false);
 
@@ -31,14 +34,18 @@ const Numpad = () => {
       // Function to fetch data from Firebase
       const fetchData = async () => {
         const db = getDatabase();
-        const dataRef = ref(db, 'passwords/');
-       // const dataRef2 = ref(db, 'utils/'); // Replace 'your_data_path' with the actual path in your database
+        const dataRef = ref(db, 'passwordsHotel/');
+    
   
         // Set up a listener for real-time updates
         onValue(dataRef, (snapshot) => {
           const fetchedData = snapshot.val();
+         
           setData(fetchedData[1]);
-       
+          setData2(fetchedData[2]);
+          setData3(fetchedData[3]);
+          setData4(fetchedData[4]);
+
         });
 
       };
@@ -87,7 +94,7 @@ const Numpad = () => {
         // Function to fetch data from Firebase
         const fetchData = async () => {
           const db = getDatabase();
-          const dataRef2 = ref(db, 'utils/'); 
+          const dataRef2 = ref(db, 'utilsHotel/'); 
     
           onValue(dataRef2, (snapshot2) => {
               const fetchedData2 = snapshot2.val();
@@ -146,12 +153,13 @@ const Numpad = () => {
  
 
     const callbackPopup = () =>  {
+      setCurrentNumber(0);
         setShowPopup(false);
         
     };
 
     const callbackPopup2 = () =>  {
-       
+      setCurrentNumber(0);
         setShowPopup2(false);
     };
 
@@ -159,10 +167,9 @@ const Numpad = () => {
     const handlePostRequest1 = async () => {
 
 
+
         if(currentNumber == data) {
           
-      
-
         try {
           const response = await fetch(
             url,
@@ -199,7 +206,128 @@ const Numpad = () => {
         } catch (error) {
           console.error("Error:", error);
         }
-    } else if (currentNumber == dataMulti) {
+    } else if(currentNumber == data2) {
+          
+      
+
+        try {
+          const response = await fetch(
+            url,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization":
+                  "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
+              },
+              body: JSON.stringify({
+                lockNo: 2,
+                IP: IP1,
+                port: port1,
+                timeStamp: "2022-02-15T12:00:02.202Z",
+              }),
+            }
+          );
+    
+          if (response.ok) {
+            const data = await response.json();
+            setResponse1(data);
+            if (data.isSuccess) {
+               
+                setShowPopup(true);
+                setCurrentNumber(0);
+     
+              } 
+    
+          } else {
+            
+            console.error("Error:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+    } else if(currentNumber == data3) {
+          
+      
+
+      try {
+        const response = await fetch(
+          url,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization":
+                "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
+            },
+            body: JSON.stringify({
+              lockNo: 3,
+              IP: IP1,
+              port: port1,
+              timeStamp: "2022-02-15T12:00:02.202Z",
+            }),
+          }
+        );
+  
+        if (response.ok) {
+         
+          const data = await response.json();
+          setResponse1(data);
+          if (data.isSuccess) {
+             
+              setShowPopup(true);
+              setCurrentNumber(0);
+   
+            }
+  
+        } else {
+          
+          console.error("Error:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+  } else if(currentNumber == data4) {
+          
+      
+
+    try {
+      const response = await fetch(
+        url,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization":
+              "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
+          },
+          body: JSON.stringify({
+            lockNo: 4,
+            IP: IP1,
+            port: port1,
+            timeStamp: "2022-02-15T12:00:02.202Z",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setResponse1(data);
+        if (data.isSuccess) {
+           
+            setShowPopup(true);
+            setCurrentNumber(0);
+ 
+          } 
+
+      } else {
+        
+        console.error("Error:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+} else if (currentNumber === dataMulti) {
       try {
           const response = await fetch(
             url2,
@@ -267,12 +395,12 @@ const Numpad = () => {
         <img src={logo} alt="Logo" className="logo" />
       </div>
       <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <div className="result" style={{border: '1px solid black', borderRadius: '5px', width: '300px' }}>{currentNumber}</div>
+      <div className="result" style={{border: '1px solid black', borderRadius: '5px', width: '300px' }}>{currentNumber !== 0 ? currentNumber : 'Şifrenizi Giriniz'}</div>
       </div>
          
       <div className="numpad">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, "C", 0].map((number) =>{  
-            return number != "C" ?
+            return number !== "C" ?
           <button key={number} onClick={() => appendNumber(number)}>
             {number}
           </button> : <button disabled style={{ background:"white", border: "none" }}></button>
