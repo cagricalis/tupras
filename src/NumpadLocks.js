@@ -250,7 +250,9 @@ const NumpadLocks = () => {
 
       const lockArray = [data,data2,data3,data4,data5,data6,data7,data8,data9,data10,data11,data12,data13,data14,data15,data16,data17,data18];
 
-      
+      console.log("current: ",currentNumber);
+      console.log("lockarray: ",(lockNo-1));
+      if(currentNumber!=0) {
       
         if(currentNumber == lockArray[lockNo-1] && fullness.charAt(lockNo-1) == "D") {
           
@@ -302,13 +304,16 @@ const NumpadLocks = () => {
         } else {
             setShowPopup2(true);
     }
+  }
       };
 
       const handlePostRequest2 = async () => {
 
+        if(currentNumber2!=0) {
+
           try {
 
-           
+           console.log("first", firstEmpty);
             const response = await fetch(
               url,
               {
@@ -408,6 +413,7 @@ const NumpadLocks = () => {
             console.error("Error:", error);
           }
       
+        }
   
 //    if (currentNumber === dataMulti) {
 //         try {
@@ -615,7 +621,7 @@ const NumpadLocks = () => {
             {number}
           </button> : <button disabled style={{ background:"white", border: "none" }}></button>
         })}
-        <button style={{ background:"#ee5f55", border: "none"   }} onClick={deleteDigit}>Delete</button>
+        <button style={{ background:"#ee5f55", border: "none"   }} onClick={deleteDigit}>Sil</button>
       </div>
 
         {showPopup && <CustomPopup onClose={callbackPopup} message={`Şifreniz Geçerlidir.Dolap Numaranız: ${popupLockNo}`} />}
@@ -624,7 +630,7 @@ const NumpadLocks = () => {
         {showPopup3 && <CustomPopup onClose={callbackPopup3} message={"Uygun Dolap Kalmamıştır"} />}
 
       <button style={{ background: 'linear-gradient(90deg, #004050, #004050)', border: "none", width:"100%"  }} onClick={handleApplyButtonClick}>
-        Apply
+        Onayla
       </button>
     </div>
   );

@@ -195,7 +195,7 @@ useEffect(() => {
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>VIP ODA 1</h2>
+      <h2>ODA 4005</h2>
       <label htmlFor="password"></label>
       <input
         type="text"
@@ -222,13 +222,13 @@ useEffect(() => {
         Şifreyi Kaydet
       </button>
       <h3>Mevcut Şifre: {data}</h3>
-      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Çıkış</p></button>
     </div>
     <div style={styles.formContainer} >
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>VIP ODA 2</h2>
+      <h2>ODA 4007</h2>
       <label htmlFor="password2"></label>
       <input
         type="text"
@@ -255,7 +255,7 @@ useEffect(() => {
         Şifreyi Kaydet
       </button>
       <h3>Mevcut Şifre: {data2}</h3>
-      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Çıkış</p></button>
     </div>
    
   
@@ -263,7 +263,7 @@ useEffect(() => {
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>VIP ODA 3</h2>
+      <h2>ODA 4009</h2>
       <label htmlFor="password3"></label>
       <input
         type="text"
@@ -290,13 +290,13 @@ useEffect(() => {
         Şifreyi Kaydet
       </button>
       <h3>Mevcut Şifre: {data3}</h3>
-      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Çıkış</p></button>
     </div>
     <div style={styles.formContainer} >
     <div style={styles.logoContainer}>
         <img src={logo} alt="Logo" className="logo" />
       </div>
-      <h2>VIP ODA 4</h2>
+      <h2>ODA 4011</h2>
       <label htmlFor="password4"></label>
       <input
         type="text"
@@ -323,7 +323,7 @@ useEffect(() => {
         Şifreyi Kaydet
       </button>
       <h3>Mevcut Şifre: {data4}</h3>
-      <button style={styles.applyBtn} onClick={handleLogout}><p>Logout</p></button>
+      <button style={styles.applyBtn} onClick={handleLogout}><p>Çıkış</p></button>
     </div>
     
 

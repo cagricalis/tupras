@@ -168,48 +168,8 @@ const Numpad = () => {
 
 
 
-        if(currentNumber == data) {
+        if(currentNumber == data4) {
           
-        try {
-          const response = await fetch(
-            url,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization":
-                  "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
-              },
-              body: JSON.stringify({
-                lockNo: 1,
-                IP: IP1,
-                port: port1,
-                timeStamp: "2022-02-15T12:00:02.202Z",
-              }),
-            }
-          );
-    
-          if (response.ok) {
-            const data = await response.json();
-            setResponse1(data);
-            if (data.isSuccess) {
-               
-                setShowPopup(true);
-                setCurrentNumber(0);
-     
-              } 
-    
-          } else {
-            
-            console.error("Error:", response.statusText);
-          }
-        } catch (error) {
-          console.error("Error:", error);
-        }
-    } else if(currentNumber == data2) {
-          
-      
-
         try {
           const response = await fetch(
             url,
@@ -250,6 +210,46 @@ const Numpad = () => {
           
       
 
+        try {
+          const response = await fetch(
+            url,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization":
+                  "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
+              },
+              body: JSON.stringify({
+                lockNo: 1,
+                IP: IP1,
+                port: port1,
+                timeStamp: "2022-02-15T12:00:02.202Z",
+              }),
+            }
+          );
+    
+          if (response.ok) {
+            const data = await response.json();
+            setResponse1(data);
+            if (data.isSuccess) {
+               
+                setShowPopup(true);
+                setCurrentNumber(0);
+     
+              } 
+    
+          } else {
+            
+            console.error("Error:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+    } else if(currentNumber == data) {
+          
+      
+
       try {
         const response = await fetch(
           url,
@@ -261,7 +261,7 @@ const Numpad = () => {
                 "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
             },
             body: JSON.stringify({
-              lockNo: 3,
+              lockNo: 4,
               IP: IP1,
               port: port1,
               timeStamp: "2022-02-15T12:00:02.202Z",
@@ -287,7 +287,7 @@ const Numpad = () => {
       } catch (error) {
         console.error("Error:", error);
       }
-  } else if(currentNumber == data4) {
+  } else if(currentNumber == data2) {
           
       
 
@@ -302,7 +302,7 @@ const Numpad = () => {
               "81551fa4-zwzn-6931-kdtk-6f209d635f5d",
           },
           body: JSON.stringify({
-            lockNo: 4,
+            lockNo: 3,
             IP: IP1,
             port: port1,
             timeStamp: "2022-02-15T12:00:02.202Z",
@@ -405,14 +405,14 @@ const Numpad = () => {
             {number}
           </button> : <button disabled style={{ background:"white", border: "none" }}></button>
         })}
-        <button style={{ background:"#ee5f55", border: "none"   }} onClick={deleteDigit}>Delete</button>
+        <button style={{ background:"#ee5f55", border: "none"   }} onClick={deleteDigit}>Sil</button>
       </div>
 
-        {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Geçerlidir"} />}
-        {showPopup2 && <CustomPopup onClose={callbackPopup2} message={"Şifreniz Geçersiz"} />}
+        {showPopup && <CustomPopup onClose={callbackPopup} message={"Şifreniz Geçerlidir. Odaya Giriş Yapabilirsiniz."} />}
+        {showPopup2 && <CustomPopup onClose={callbackPopup2} message={"Şifreniz Geçersiz. Lütfen Şifrenizi Kontrol Ediniz."} />}
 
       <button style={{ background: 'linear-gradient(90deg, #004050, #004050)', border: "none", width:"100%"  }} onClick={handlePostRequest1}>
-        Apply
+        Onayla
       </button>
     </div>
   );

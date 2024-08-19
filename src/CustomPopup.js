@@ -21,6 +21,12 @@ const CustomPopup = ({ data, onClose, message }) => {
       <div className="popup-content">
         <h1>{message}</h1>
         <p>{data}</p>
+
+        {/* <img 
+          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" 
+          alt="GIF" 
+          className="popup-gif" 
+        /> */}
         <button onClick = {onClose}>Kapat</button>
       </div>
     </div>
